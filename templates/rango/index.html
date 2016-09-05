@@ -1,18 +1,44 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
-    <head>
-        <title>Rango </title>
-    </head>
-    <img src="{% static "images/surface.jpg" %}" alt="My image"/>
-    <body>
-        <h1>Rango says ...</h1>
-        <div>
-            hey there partner!<br/>
-            <strong>{{ boldmessage }}</strong><br/>
-        </div>
-        <div>
-            <a href="/rango/about"></a><br/>
-        </div>
-    </body>
+<head>
+    <title>Rango </title>
+</head>
+
+<body>
+<h1>Rango says ...</h1>
+<div>
+    hey there partner!<br/>
+    <strong>{{ boldmessage }}</strong><br/>
+</div>
+<div>
+    {% if categories %}
+        <strong>Most liked categories</strong>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="/rango/category/{{ category.slug }}">{{ category.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no categories present.</strong>
+    {% endif %}
+
+    {% if pages %}
+        <strong>Most liked pages</strong>
+        <ul>
+            {% for page in pages %}
+                <li><a href="{{ page.url }}">{{ page.title }} {{ page.views }}</a> </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no pages peresent.</strong>
+    {% endif %}
+</div>
+<div>
+    <a href="/rango/about">About Rango</a><br/>
+    <img src="{% static "images/surface.jpg" %}" alt="Picture of surface">
+</div>
+</body>
 </html>

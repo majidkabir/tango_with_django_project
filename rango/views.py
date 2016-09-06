@@ -7,6 +7,11 @@ from rango.models import Page
 from rango.forms import CategoryForm, PageForm
 
 
+def about(request):
+    context_dict = {"visit_count": 0}
+    return render(request,'rango/about.html', context_dict)
+
+
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
     page_list = Page.objects.order_by('-views')[:5]

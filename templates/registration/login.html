@@ -1,0 +1,34 @@
+{% extends 'rango/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Login
+{% endblock %}
+
+{% block body_block %}
+    <link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css"
+          rel="stylesheet">
+    <div class="jumbotron">
+        <h1 class="display-3">Login</h1>
+    </div>
+
+    <form class="form-signin" role="form" method="post" action=".">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label class="sr-only" for="inputUsername">Username</label>
+        <input class="form-control" name="username" id="inputUsername"
+               autofocus="" required="" type="text" placeholder="Username">
+        <label class="sr-only" for="inputPassword">Password</label>
+        <input class="form-control" name="password" id="inputPassword"
+               required="" type="password" placeholder="Password">
+        <!--
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        -->
+        Not a member? <a href="{% url 'registration_register' %}">Register</a>!
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+{% endblock %}

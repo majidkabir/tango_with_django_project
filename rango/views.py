@@ -1,10 +1,15 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Import the Category model
+from django.urls import reverse
+
 from rango.models import Category
 from rango.models import Page
-from rango.forms import CategoryForm, PageForm
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 
 
 def about(request):
@@ -38,6 +43,7 @@ def show_category(request, category_name_slug):
     return render(request, 'rango/category.html', context=context_dict)
 
 
+@login_required()
 def add_category(request):
     form = CategoryForm()
 
@@ -53,6 +59,7 @@ def add_category(request):
     return render(request, 'rango/add_category.html', context={'form':form})
 
 
+@login_required()
 def add_page(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -74,3 +81,8 @@ def add_page(request, category_name_slug):
 
     context_dict = {'form' : form, 'category': category}
     return render(request, 'rango/add_page.html', context_dict)
+
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
